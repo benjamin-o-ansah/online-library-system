@@ -176,3 +176,19 @@ def list_borrowed_books(users_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"msg": "An error occurred while displaying borrowed books", "error": str(e)}), 500
+    
+@bp.route('/borrowed', methods=['GET'])
+@jwt_required()
+def get_borrowedBooks():
+    try:
+        borrowed_books = BorrowedBook.query.all()
+        borrowedList = [{ 'id': borrowed.id, 'users_id': borrowed.users_id,'books_id':borrowed.books_id, 'borrowed_Date': borrowed.borrow_date, 'due_Date':borrowed.due_date,'return_Date': borrowed.return_date, } for borrowed in borrowed_books]
+        return jsonify(borrowedList), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"msg": "An error occurred while getting borrowed books", "error": str(e)}), 500
+    except KeyError:
+        return jsonify({"msg": "Missing or invalid data"}), 400    
+
+    
+    

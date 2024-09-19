@@ -71,7 +71,7 @@ def logout():
         for i in BLACKLIST:
             blac.append(i)
         return jsonify({"msg": "Successfully logged out","e":blac}), 200
-
+       
     except Exception as e:
         return jsonify({"msg": "An error occurred during logout", "error": str(e)}), 500
 

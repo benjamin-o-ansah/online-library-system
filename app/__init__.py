@@ -33,6 +33,8 @@ def create_app():
     app.register_blueprint(books.bp)
     app.register_blueprint(users.bp)
     
+    
+    
     with app.app_context():
         try:
             db.create_all()
